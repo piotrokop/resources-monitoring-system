@@ -1,0 +1,15 @@
+[submodule "sensor"]
+	path = sensor
+	url = https://github.com/random-development/sensor
+[submodule "monitor"]
+	path = monitor
+	url = https://github.com/random-development/monitor.git
+[submodule "gateway"]
+	path = gateway
+	url = https://github.com/random-development/gateway
+[submodule "web-client"]
+	path = web-client
+	url = https://github.com/random-development/web-client
+[submodule "cli-client"]
+	path = cli-client
+	url = https://github.com/random-development/cli-client

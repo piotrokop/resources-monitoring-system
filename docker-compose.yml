@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+  monitor:
+    build: ./monitor
+    ports:
+      - "8085:8080"
+    depends_on:
+      - influxdb
+    restart: always
+
+  influxdb:
+    image: influxdb:1.7.6
+    ports:
+      - 8086:8086
+    environment:
+      - INFLUXDB_ADMIN_USER=user
+      - INFLUXDB_ADMIN_PASSWORD=password
+    restart: always
+
+  sensor:
+    build: ./sensor
+    command: /app/sensor --config /app/config
+    volumes:
+      - ./sensor/configs:/app/config
+    depends_on:
+      - monitor
+    restart: always
