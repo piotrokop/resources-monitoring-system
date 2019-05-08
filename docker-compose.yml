@@ -18,9 +18,27 @@ services:
       - INFLUXDB_ADMIN_PASSWORD=password
     restart: always
 
-  sensor:
+  sensor1:
     build: ./sensor
-    command: /app/sensor --config /app/config
+    command: /app/sensor --config /app/config/sensor_1
+    volumes:
+      - ./sensor/configs:/app/config
+    depends_on:
+      - monitor
+    restart: always
+
+  sensor2:
+    build: ./sensor
+    command: /app/sensor --config /app/config/sensor_2
+    volumes:
+      - ./sensor/configs:/app/config
+    depends_on:
+      - monitor
+    restart: always
+
+  sensor3:
+    build: ./sensor
+    command: /app/sensor --config /app/config/sensor_3
     volumes:
       - ./sensor/configs:/app/config
     depends_on:
