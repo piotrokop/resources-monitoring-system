@@ -1,12 +1,48 @@
 version: '3'
 services:
+  web-client:
+    build: ./web-client
+    ports:
+      - "4200:80"
 
-  monitor:
+  auth-server:
+    build: ./auth-server
+    ports:
+      - "7000:7000"
+
+  api-gateway:
+    build: ./gateway
+    ports:
+      - "5000:5000"
+    environment:
+      SPRING_APPLICATION_JSON: '{"spring.security.oauth2.resource.token-info-uri": "http://auth-server:7000/oauth/check_token"}'
+
+  monitor1:
+    build: ./monitor
+    ports:
+      - "8084:8080"
+    environment:
+      - INFLUX_URL=http://influxdb:8086
+      - API_GATEWAY_URL_REGISTRATION=http://api-gateway:5000/gateway/monitor/manage
+      - API_GATEWAY_MONITOR_NAME=monitor1
+
+    depends_on:
+      - influxdb
+      - api-gateway
+    restart: always
+
+  monitor2:
     build: ./monitor
     ports:
       - "8085:8080"
+    environment:
+      - INFLUX_URL=http://influxdb:8086
+      - API_GATEWAY_URL_REGISTRATION=http://api-gateway:5000/gateway/monitor/manage
+      - API_GATEWAY_MONITOR_NAME=monitor2
+
     depends_on:
       - influxdb
+      - api-gateway
     restart: always
 
   influxdb:
@@ -23,8 +59,6 @@ services:
     command: /app/sensor --config /app/config/sensor_1
     volumes:
       - ./sensor/configs:/app/config
-    depends_on:
-      - monitor
     restart: always
 
   sensor2:
@@ -32,8 +66,6 @@ services:
     command: /app/sensor --config /app/config/sensor_2
     volumes:
       - ./sensor/configs:/app/config
-    depends_on:
-      - monitor
     restart: always
 
   sensor3:
@@ -41,6 +73,18 @@ services:
     command: /app/sensor --config /app/config/sensor_3
     volumes:
       - ./sensor/configs:/app/config
-    depends_on:
-      - monitor
+    restart: always
+
+  sensor4:
+    build: ./sensor
+    command: /app/sensor --config /app/config/sensor_4
+    volumes:
+      - ./sensor/configs:/app/config
+    restart: always
+
+  sensor5:
+    build: ./sensor
+    command: /app/sensor --config /app/config/sensor_5
+    volumes:
+      - ./sensor/configs:/app/config
     restart: always

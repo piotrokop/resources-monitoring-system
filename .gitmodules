@@ -13,3 +13,6 @@
 [submodule "cli-client"]
 	path = cli-client
 	url = https://github.com/random-development/cli-client
+[submodule "auth-server"]
+	path = auth-server
+	url = https://github.com/random-development/auth-server
