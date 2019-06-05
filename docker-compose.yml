@@ -15,7 +15,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      SPRING_APPLICATION_JSON: '{"spring.security.oauth2.resource.token-info-uri": "http://auth-server:7000/oauth/check_token"}'
+      SPRING_APPLICATION_JSON: '{"security.oauth2.resource.token-info-uri": "http://auth-server:7000/oauth/check_token"}'
 
   monitor1:
     build: ./monitor
