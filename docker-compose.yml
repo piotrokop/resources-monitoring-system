@@ -26,7 +26,9 @@ services:
       - API_GATEWAY_MONITOR_NAME=monitor1
     environment:
       SPRING_APPLICATION_JSON: '{"api.gateway.url.registration": "http://api-gateway:5000/monitor/manage",
-                                   "api.gateway.url.monitor": "http://monitor1:8080/" }'
+                                   "api.gateway.url.monitor": "http://monitor1:8080/" ,
+                                    "api.gateway.monitor.name": "monitor1",
+                                    "influx.database-name": "monitorjeden"}'
 
     depends_on:
       - influxdb
@@ -42,7 +44,9 @@ services:
       - API_GATEWAY_MONITOR_NAME=monitor2
     environment:
       SPRING_APPLICATION_JSON: '{"api.gateway.url.registration": "http://api-gateway:5000/monitor/manage",
-                                   "api.gateway.url.monitor": "http://monitor2:8080/" }'
+                                   "api.gateway.url.monitor": "http://monitor2:8080/" ,
+                                    "api.gateway.monitor.name": "monitor2",
+                                    "influx.database-name": "monitordwa"}'
 
     depends_on:
       - influxdb
