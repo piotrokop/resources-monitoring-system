@@ -23,8 +23,10 @@ services:
       - "8084:8080"
     environment:
       - INFLUX_URL=http://influxdb:8086
-      - API_GATEWAY_URL_REGISTRATION=http://api-gateway:5000/gateway/monitor/manage
       - API_GATEWAY_MONITOR_NAME=monitor1
+    environment:
+      SPRING_APPLICATION_JSON: '{"api.gateway.url.registration": "http://api-gateway:5000/monitor/manage",
+                                   "api.gateway.url.monitor": "http://monitor1:8080/" }'
 
     depends_on:
       - influxdb
@@ -37,8 +39,10 @@ services:
       - "8085:8080"
     environment:
       - INFLUX_URL=http://influxdb:8086
-      - API_GATEWAY_URL_REGISTRATION=http://api-gateway:5000/gateway/monitor/manage
       - API_GATEWAY_MONITOR_NAME=monitor2
+    environment:
+      SPRING_APPLICATION_JSON: '{"api.gateway.url.registration": "http://api-gateway:5000/monitor/manage",
+                                   "api.gateway.url.monitor": "http://monitor2:8080/" }'
 
     depends_on:
       - influxdb
